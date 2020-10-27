@@ -8,22 +8,28 @@ module.exports = {
     const dedupField = process.env['CRAWLAB_DEDUP_FIELD']
     const dedupMethod = process.env['CRAWLAB_DEDUP_METHOD']
     try {
+      let result;
       if (isDedup) {
         if (dedupMethod === 'overwrite') {
           const query = {}
           query[dedupField] = item[dedupField]
           await col.removeOne(query)
-          await col.insertOne(item)
+          result = await col.insertOne(item)
         } else if (dedupMethod === 'ignore') {
-          await col.insertOne(item)
+          result = await col.insertOne(item)
         } else {
-          await col.insertOne(item)
+          result = await col.insertOne(item)
         }
       } else {
-        await col.insertOne(item)
+        result = await col.insertOne(item)
       }
+      return new Promise(resolve => {
+        resolve(result);
+      });
     } catch (e) {
-      // do nothing
+      return new Promise((_,reject) => {
+          reject(e);
+      });
     }
   },
   close: async () => {
