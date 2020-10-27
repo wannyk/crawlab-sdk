@@ -23,13 +23,9 @@ module.exports = {
       } else {
         result = await col.insertOne(item)
       }
-      return new Promise(resolve => {
-        resolve(result);
-      });
+      return result;
     } catch (e) {
-      return new Promise((_,reject) => {
-          reject(e);
-      });
+      return e;
     }
   },
   close: async () => {
