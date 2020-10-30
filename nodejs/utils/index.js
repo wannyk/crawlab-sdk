@@ -28,6 +28,18 @@ module.exports = {
       return e;
     }
   },
+  queryLatest: async (queryField) => {
+    try {
+      const col = await db.getCollection()
+      const sort = {};
+      sort[queryField] = -1;
+      const result = await col.find().sort(sort).limit(1).toArray();
+      if (result.length==1) return result[0];
+      else throw new Error('Not Found');
+    } catch (e) {
+      return e;
+    }
+  },
   close: async () => {
     const client = await db.getClient()
     await client.close()
