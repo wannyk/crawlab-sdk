@@ -2,6 +2,9 @@ const utils = require('./utils')
 
 module.exports = {
   saveItem: utils.saveItem,
-  queryLatest: utils.queryLatest,
+  find: utils.find,
+  update: utils.update,
+  delete: utils.delete,
+  findLatest: utils.findLatest,
   close: utils.close
 }

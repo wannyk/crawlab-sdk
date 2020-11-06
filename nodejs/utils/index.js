@@ -28,7 +28,31 @@ module.exports = {
       return e;
     }
   },
-  queryLatest: async (queryField) => {
+  find: async (query) => {
+    try {
+      const col = await db.getCollection();
+      return await col.find(query).toArray();
+    } catch (e) {
+      return e;
+    }
+  },
+  update: async (query, update) => {
+    try {
+      const col = await db.getCollection();
+      return (await col.updateMany(query, update)).modifiedCount;
+    } catch (e) {
+      return e;
+    }
+  },
+  delete: async (query) => {
+    try {
+      const col = await db.getCollection();
+      return (await col.deleteMany(query)).deletedCount;
+    } catch (e) {
+      return e;
+    }
+  },
+  findLatest: async (queryField) => {
     try {
       const col = await db.getCollection()
       const sort = {};
