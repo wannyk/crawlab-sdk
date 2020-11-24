@@ -25,7 +25,7 @@ module.exports = {
       }
       return result;
     } catch (e) {
-      return e;
+      throw e;
     }
   },
   find: async (query) => {
@@ -33,7 +33,7 @@ module.exports = {
       const col = await db.getCollection();
       return await col.find(query).toArray();
     } catch (e) {
-      return e;
+      throw e;
     }
   },
   update: async (query, update) => {
@@ -41,7 +41,7 @@ module.exports = {
       const col = await db.getCollection();
       return (await col.updateMany(query, update)).modifiedCount;
     } catch (e) {
-      return e;
+      throw e;
     }
   },
   delete: async (query) => {
@@ -49,7 +49,7 @@ module.exports = {
       const col = await db.getCollection();
       return (await col.deleteMany(query)).deletedCount;
     } catch (e) {
-      return e;
+      throw e;
     }
   },
   findLatest: async (queryField) => {
@@ -61,7 +61,7 @@ module.exports = {
       if (result.length==1) return result[0];
       else throw new Error('Not Found');
     } catch (e) {
-      return e;
+      throw e;
     }
   },
   close: async () => {
